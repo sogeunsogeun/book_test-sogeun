@@ -394,7 +394,7 @@
                 q: "갑자기 일주일 동안 스마트폰과 인터넷이 전면 차단된다면?",
                 options: [
                     { text: "오히려 좋아! 그동안 밀린 초자연적·미스터리 장편 소설을 쌓아두고 읽는다", type: "A" },
-                    { text: "나 자신을 되돌아보며 조용히 사색하고 아날로그 감성을 즐친다", type: "D" },
+                    { text: "나 자신을 되돌아보며 조용히 사색하고 아날로그 감성을 즐긴다", type: "D" },
                     { text: "우주나 이세계로 떠나는 판타지 만화책을 전권 대여해 와서 방방 뒹굴며 본다", type: "G" },
                     { text: "미래 사회를 대비하기 위해 최신 종이 신문과 트렌드 서적을 정독한다", type: "E" }
                 ]
@@ -428,7 +428,6 @@
             }
         ];
 
-        // 🌟 140권 마스터피스 도서 데이터 풀 (교정 완료)
         const categoryDetails = {
             "A": {
                 name: "스릴만점 프로 추적러",
@@ -502,7 +501,7 @@
                     { title: "1984", desc: "빅브라더라는 거대 감시 체계 아래 말살되는 인간의 존엄성을 그린 디스토피아.", crossover: "F" },
                     { title: "은하수를 여행하는 히치하이커를 위한 안내서", desc: "지구 폭발 직전 우주로 튕겨 나간 지구인의 황당무계하고 유쾌한 SF.", crossover: "G" },
                     { title: "모모", desc: "시간 도둑들에게 빼앗긴 사람들의 따뜻한 시간들을 되찾아주는 신비한 소녀.", crossover: "D" },
-                    { title: "눈물을 마시는 새", desc: "독창적인 동양풍 설정และ 네 종족의 대서사를 그린 이영도 작가의 판타지 거작.", crossover: "F" },
+                    { title: "눈물을 마시는 새", desc: "독창적인 동양풍 설정과 네 종족의 대서사를 그린 이영도 작가의 판타지 거작.", crossover: "F" },
                     { title: "안드로이드는 전기양의 꿈을 꾸는가?", desc: "인간과 복제인간의 경계에서 '인간성'의 본질을 캐묻는 사이버펑크의 시초.", crossover: "D" },
                     { title: "파운데이션", desc: "은하 제국의 흥망성쇠를 거대한 수학적 통계학으로 예측해 나가는 SF 대작.", crossover: "E" },
                     { title: "시간 여행자의 아내", desc: "제어할 수 없는 시간 유랑증에 걸린 남자와 그를 향한 애틋한 사랑 서사.", crossover: "B" },
@@ -601,7 +600,7 @@
                     { title: "징비록", desc: "임진왜란의 참혹한 실책을 반성하고 미래를 경계하기 위해 류성룡이 피로 쓴 역사 기록.", crossover: "A" },
                     { title: "목민심서", desc: "공직자가 지녀야 할 청렴한 자세와 백성을 다스리는 도리를 다룬 정약용의 명작.", crossover: "E" },
                     { title: "로마인 이야기", desc: "작은 도시국가 로마가 어떻게 천년 세계 제국으로 성장했는가에 대한 방대한 인프라史.", crossover: "E" },
-                    { title: "그리스 로마 신화", desc: "서양 문화와 문학의 뿌리가 되는 신들과 인간들의 흥미진진한 상상력 원천.", crossover: "C" },
+                    { title: "그ريس 로마 신화", desc: "서양 문화와 문학의 뿌리가 되는 신들과 인간들의 흥미진진한 상상력 원천.", crossover: "C" },
                     { title: "삼국유사", desc: "우리 민족의 건국 신화와 민간 설화, 역사적 발자취를 담은 보물 같은 고대 기록.", crossover: "C" },
                     { title: "감시와 처벌", desc: "현대 사회의 병원, 학교, 군대가 어떻게 거대한 감옥처럼 인간을 길들이는지 분석한 철학.", crossover: "A" },
                     { title: "역사의 쓸모", desc: "역사 속 인물들의 삶의 궤적을 통해 오늘 내 삶의 답답한 질문에 답을 구하는 책.", crossover: "D" },
@@ -724,11 +723,14 @@
                 "G": "만화/웹툰"
             };
             
+            // 🌟 [수정 반영] 메인 및 서브 취향 텍스트 <strong> 태그 추가로 진하게 강조 처리
             let combinedName = `${nameMap[top1]} x ${nameMap[top2]} 융합형 취향`;
-            let combinedDesc = `당신의 메인 취향은 [${categoryDetails[top1].name}]이며, 서브 취향으로 [${categoryDetails[top2].name}] 성향도 함께 가지고 계시네요! \n\n${categoryDetails[top1].desc} 더불어 ${categoryDetails[top2].desc.replace("당신은 ", "")} 두 가지 매력을 모두 관통하는 도서들을 선별해 드립니다.`;
+            let combinedDesc = `당신의 메인 취향은 <strong>[${categoryDetails[top1].name}]</strong>이며, 서브 취향으로 <strong>[${categoryDetails[top2].name}]</strong> 성향도 함께 가지고 계시네요! \n\n${categoryDetails[top1].desc} 더불어 ${categoryDetails[top2].desc.replace("당신은 ", "")} 두 가지 매력을 모두 관통하는 도서들을 선별해 드립니다.`;
 
             document.getElementById("result-name").innerText = combinedName;
-            document.getElementById("result-desc").innerText = combinedDesc;
+            
+            // 🌟 [수정 반영] <strong> 태그를 웹 문서로 안전하게 읽기 위해 innerText를 innerHTML로 전면 개정
+            document.getElementById("result-desc").innerHTML = combinedDesc;
 
             const bookListContainer = document.getElementById("book-list");
             bookListContainer.innerHTML = ""; 
