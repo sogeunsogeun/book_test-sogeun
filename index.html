@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소근소근 독서 취향 테스트</title>
+    <style>
+        :root {
+            --bg-color: #fdf8eb;
+            --main-green: #0b663b;
+            --accent-green: #148f52;
+            --light-green: #eaf5ee;
+            --text-dark: #2c3e50;
+            --text-muted: #5a6c7d;
+            --white: #ffffff;
+            --card-shadow: 0 8px 24px rgba(11, 102, 59, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--white);
+            border-radius: 24px;
+            padding: 35px 25px;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--light-green);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: var(--main-green);
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        .main-img {
+            margin: 20px 0 30px 0;
+        }
+        
+        .main-img img {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .btn {
+            background-color: var(--main-green);
+            color: var(--white);
+            border: none;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(11, 102, 59, 0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--accent-green);
+            transform: translateY(-2px);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: var(--light-green);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--main-green);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .q-number {
+            color: var(--main-green);
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .q-text {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.4;
+            word-break: keep-all;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background-color: var(--white);
+            color: var(--text-dark);
+            border: 2px solid var(--light-green);
+            padding: 16px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 14px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            line-height: 1.3;
+        }
+
+        .option-btn:hover {
+            background-color: var(--light-green);
+            border-color: var(--main-green);
+            color: var(--main-green);
+            padding-left: 24px;
+        }
+
+        .result-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .result-name {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--main-green);
+            margin-bottom: 25px;
+            line-height: 1.3;
+        }
+
+        .result-desc {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-dark);
+            margin-bottom: 30px;
+            text-align: left;
+            background: var(--bg-color);
+            padding: 20px;
+            border-radius: 16px;
+            word-break: keep-all;
+            white-space: pre-line;
+        }
+
+        .book-section-title {
+            font-size: 16px;
+            font-weight: 700;
+            text-align: left;
+            margin-bottom: 12px;
+            color: var(--main-green);
+            border-left: 4px solid var(--main-green);
+            padding-left: 8px;
+        }
+
+        .book-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .book-card {
+            background: var(--white);
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: left;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .book-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            background: var(--light-green);
+            color: var(--main-green);
+            padding: 3px 8px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+        }
+
+        .book-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .book-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .restart-btn {
+            margin-top: 10px;
+        }
+
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .container { padding: 30px 20px; border-radius: 20px; }
+            h1 { font-size: 24px; }
+            .q-text { font-size: 18px; }
+            .option-btn { font-size: 14px; padding: 14px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="start-screen" class="screen active">
+            <div class="main-img">
+                <img src="logo.png" alt="소근소근 로고" style="width: 260px; height: auto;">
+            </div>
+            <h1>소근소근<br>독서 취향 테스트</h1>
+            <p class="subtitle">나도 모르는 나의 숨겨진 독서 성향과<br>내 마음에 쏙 맞춘 인생 책 찾기</p>
+            <button class="btn" onclick="startTest()">테스트 시작하기</button>
+        </div>
+
+        <div id="question-screen" class="screen">
+            <div class="progress-container">
+                <div id="progress-bar" class="progress-bar"></div>
+            </div>
+            <div id="q-number" class="q-number">Question 1 / 15</div>
+            <div id="q-text" class="q-text">질문 텍스트</div>
+            <div id="options" class="options-list"></div>
+        </div>
+
+        <div id="result-screen" class="screen">
+            <div class="result-title">당신의 독서 취향은?</div>
+            <div id="result-name" class="result-name">유형 이름 조합</div>
+            <div id="result-desc" class="result-desc">유형 설명</div>
+            
+            <div class="book-section-title">당신을 위한 맞춤 도서 추천</div>
+            <div id="book-list" class="book-list"></div>
+
+            <button class="btn restart-btn" onclick="restartTest()">테스트 다시하기</button>
+        </div>
+
+    </div>
+
+    <script>
+        // 🌟 15가지 프리미엄 수학적 밸런스 질문지
+        const questions = [
+            {
+                q: "주말 저녁, 넷플릭스를 켰을 때 가장 먼저 눈길이 가는 썸네일은?",
+                options: [
+                    { text: "피가 거꾸로 솟는 범죄 현장이나 탈출극", type: "A" },
+                    { text: "보기만 해도 심장이 간질간질해지는 하이틴 로맨스", type: "B" },
+                    { text: "시각 효과가 압도적인 우주 전쟁이나 마법 세계", type: "C" },
+                    { text: "가볍고 귀여운 그림체의 애니메이션이나 웹툰 원작", type: "G" }
+                ]
+            },
+            {
+                q: "서점에 들어섰을 때, 발걸음이 가장 오래 머무는 공간은?",
+                options: [
+                    { text: "마음을 울리는 문구가 적힌 잔잔한 매대", type: "D" },
+                    { text: "주식, 부동산, 트렌드 분석이 깔린 신간 코너", type: "E" },
+                    { text: "두꺼운 역사서와 인류의 기원이 적힌 깊숙한 코너", type: "F" },
+                    { text: "소설 코너 중에서도 반전 플롯이 숨겨진 매대", type: "A" }
+                ]
+            },
+            {
+                q: "친구가 '나 요즘 너무 번아웃 온 것 같아...'라며 한숨 쉴 때 내 반응은?",
+                options: [
+                    { text: "'나도 그랬는데, 이 한 줄 읽고 울컥했어' 가슴 따뜻한 글귀를 보낸다", type: "D" },
+                    { text: "'생산성이 떨어졌구나. 이직이나 부업 트렌드를 알아볼까?' 해결책을 준다", type: "E" },
+                    { text: "'다 잊고 대리 설렘 가득한 로맨스 소설이나 보면서 기분 전환하자!'", type: "B" },
+                    { text: "'복잡한 거 보지 말고, 가볍게 피식 웃을 수 있는 웹툰 정주행 고?'", type: "G" }
+                ]
+            },
+            {
+                q: "만약 나에게 타임머신이 생겨 딱 한 번 이동할 수 있다면?",
+                options: [
+                    { text: "미래의 초고도 과학 기술 도시로 날아가 보기", type: "C" },
+                    { text: "고대 로마나 조선 시대로 가서 역사적 진실을 목격하기", type: "F" },
+                    { text: "10년 전으로 돌아가 유망한 주식이나 비트코인 사두기", type: "E" },
+                    { text: "내가 좋아하는 만화나 웹툰 속 세계관으로 빙의하기", type: "G" }
+                ]
+            },
+            {
+                q: "친구들과의 대화 중 내가 가장 흥미롭게 듣는 주제는?",
+                options: [
+                    { text: "요즘 세상 돌아가는 경제 흐름과 성공한 사람들의 재테크 비법", type: "E" },
+                    { text: "최근 화제가 된 미제 사건이나 소름 돋는 범죄 심리 이야기", type: "A" },
+                    { text: "인간의 심리, 철학, 또는 흥미진진한 세계사 비화", type: "F" },
+                    { text: "사랑, 연애, 혹은 사람 관계에서 오는 말랑말랑한 감정 이야기", type: "B" }
+                ]
+            },
+            {
+                q: "가방 속에 책을 딱 한 권만 넣고 다녀야 한다면, 어떤 책이 좋을까?",
+                options: [
+                    { text: "아무 페이지나 펼쳐서 가볍게 읽고 위로받을 수 있는 책", type: "D" },
+                    { text: "한 번 펼치면 범인이 궁금해서 중간에 절대 못 덮는 책", type: "A" },
+                    { text: "두께는 얇지만 캐릭터와 연출이 화려해 눈이 즐거운 책", type: "G" },
+                    { text: "비현실적인 설정으로 머릿속을 신선한 자극으로 채워주는 책", type: "C" }
+                ]
+            },
+            {
+                q: "내가 세상을 바라볼 때 가장 중요하게 생각하는 관점은?",
+                options: [
+                    { text: "인간의 감정과 따뜻한 소통, 그리고 자아 성찰", type: "D" },
+                    { text: "철저한 데이터, 트렌드, 그리고 실질적인 자산의 성장", type: "E" },
+                    { text: "과거로부터 배우는 교훈, 그리고 인간 사회에 대한 깊은 통찰", type: "F" },
+                    { text: "현실의 제약을 뛰어넘는 무한한 상상력과 가능성", type: "C" }
+                ]
+            },
+            {
+                q: "일상에 지쳐 무작정 낯선 곳으로 혼자 여행을 떠난 당신, 숙소에서 하고 싶은 것은?",
+                options: [
+                    { text: "밤바다 소리를 들으며 다정한 문장들을 다이어리에 꾹꾹 눌러 쓰기", type: "D" },
+                    { text: "침대에 누워 이불을 뒤집어쓰고 아껴둔 로맨스 소설 정주행하기", type: "B" },
+                    { text: "낯선 동네의 오래된 박물관이나 유적지 찾아가 탐방하기", type: "F" },
+                    { text: "블루투스 스피커를 크게 틀어놓고 웅장한 SF 영화 한 편 때리기", type: "C" }
+                ]
+            },
+            {
+                q: "내가 생각하는 '인생 명작'의 기준은 무엇인가요?",
+                options: [
+                    { text: "마지막 장을 덮었을 때 온몸에 소름이 돋는 충격적인 반전", type: "A" },
+                    { text: "오랜 시간이 지나도 가슴에 깊은 여운과 뭉클함을 남기는 감정", type: "B" },
+                    { text: "상상도 못 한 거대한 세계관과 독창적인 설정", type: "C" },
+                    { text: "내 삶의 방향성을 완전히 바꿔놓은 현실적인 지혜와 배움", type: "E" }
+                ]
+            },
+            {
+                q: "만약 내가 직접 글을 쓰는 작가가 된다면 도전해보고 싶은 분야는?",
+                options: [
+                    { text: "치밀한 복선과 떡밥을 깔아두는 천재 미스터리 작가", type: "A" },
+                    { text: "글로 사람들의 마음에 따뜻한 반창고를 붙여주는 치유 에세이 작가", type: "D" },
+                    { text: "글보단 그림과 재치 있는 대사로 독자들을 몰입시키는 만화가", type: "G" },
+                    { text: "철저한 고증을 바탕으로 시대를 재조명하는 역사 인문학자", type: "F" }
+                ]
+            },
+            {
+                q: "지인에게 책을 선물하려고 합니다. 어떤 책을 고르시겠습니까?",
+                options: [
+                    { text: "트렌디하고 실용적이어서 당장 삶에 도움이 되는 경제 가이드북", type: "E" },
+                    { text: "연애 세포를 깨워주거나 인간관계의 다정함을 담은 소설", type: "B" },
+                    { text: "남녀노소 호불호 없이 10분 만에 몰입해서 웃으며 읽을 수 있는 만화책", type: "G" },
+                    { text: "밤새도록 지적 쾌감을 채워줄 수 있는 흥미진진한 교양 도서", type: "F" }
+                ]
+            },
+            {
+                q: "갑자기 일주일 동안 스마트폰과 인터넷이 전면 차단된다면?",
+                options: [
+                    { text: "오히려 좋아! 그동안 밀린 초자연적·미스터리 장편 소설을 쌓아두고 읽는다", type: "A" },
+                    { text: "나 자신을 되돌아보며 조용히 사색하고 아날로그 감성을 즐긴다", type: "D" },
+                    { text: "우주나 이세계로 떠나는 판타지 만화책을 전권 대여해 와서 방방 뒹굴며 본다", type: "G" },
+                    { text: "미래 사회를 대비하기 위해 최신 종이 신문과 트렌드 서적을 정독한다", type: "E" }
+                ]
+            },
+            {
+                q: "친구가 깜짝 선물로 전시회 티켓을 주었습니다. 어떤 전시회였으면 좋겠나요?",
+                options: [
+                    { text: "유명 만화가/웹툰 작가의 비하인드 스케치 및 굿즈 전시회", type: "G" },
+                    { text: "고대 이집트 미라나 가려진 역사적 유물을 보여주는 기획전", type: "F" },
+                    { text: "몽환적인 미디어 아트로 우주 한가운데 서 있는 듯한 체험전", type: "C" },
+                    { text: "연인들의 사랑과 애틋한 스토리를 담은 감성 사진전", type: "B" }
+                ]
+            },
+            {
+                q: "드라마나 웹툰을 볼 때 내가 가장 참을 수 없는 답답한 상황은?",
+                options: [
+                    { text: "주인공들의 오해 때문에 로맨스 진도가 안 나가고 고구마 먹을 때", type: "B" },
+                    { text: "사건의 범인이 누군지 뻔히 보이는데 주인공만 삽질하고 있을 때", type: "A" },
+                    { text: "감정에만 호소하고 현실적인 대안이나 논리적 팩트가 전혀 없을 때", type: "E" },
+                    { text: "뻔한 클리셰만 남발하고 신선한 상상력이나 설정이 전혀 없을 때", type: "C" }
+                ]
+            },
+            {
+                q: "마지막 질문입니다. 오늘 밤, 당신의 침대 머리맡에 두고 싶은 책의 표지 느낌은?",
+                options: [
+                    { text: "어둡고 강렬하여 비밀을 감추고 있는 듯한 표지", type: "A" },
+                    { text: "파스텔톤의 따뜻하고 감성적인 일러스트가 그려진 표지", type: "D" },
+                    { text: "화려하고 우주적이거나 신비로운 그래픽이 들어간 표지", type: "C" },
+                    { text: "제목이 큼직하고 깔끔하여 신뢰감을 주는 타이포그래피 표지", type: "E" }
+                ]
+            }
+        ];
+
+        // 🌟 완벽한 140권 하이브리드 크로스오버 도서 풀 (25권씩 x 7개 장르)
+        const categoryDetails = {
+            "A": {
+                name: "스릴만점 프로 추적러",
+                desc: "당신은 지루할 틈 없는 빠른 전개와 심장을 쫄깃하게 만드는 사건 중심의 소설을 좋아합니다.",
+                books: [
+                    // 스테디셀러 15권
+                    { title: "그리고 아무도 없었다", desc: "외딴섬 밀실에서 벌어지는 아가사 크리스티의 전설적인 정통 추리극.", crossover: "F" },
+                    { title: "셜록 홈즈 명작선", desc: "천재 탐정의 논리적인 추리력과 짜릿한 모험을 담은 고전 추리 소설.", crossover: "F" },
+                    { title: "다빈치 코드", desc: "미술관의 암호를 풀며 역사적 종교 음모에 다가가는 지적 스릴러.", crossover: "F" },
+                    { title: "용의자 X의 헌신", desc: "천재 수학자가 설계한 완벽한 알리바이를 깨뜨리는 완벽한 두뇌 싸움.", crossover: "B" },
+                    { title: "화차", desc: "신용사회의 어두운 이면 속에서 실종된 여인을 추적하는 사회파 미스터리.", crossover: "E" },
+                    { title: "7년의 밤", desc: "액자식 구성 속에서 폭발하는 서사와 지독한 복수극을 그린 한국 스릴러.", crossover: "D" },
+                    { title: "모방범", desc: "범죄의 잔혹함과 사회적 파장을 극사실적으로 묘사한 미야베 미유키의 대작.", crossover: "F" },
+                    { title: "백설공주에게 죽음을", desc: "마을 사람들의 차가운 위선 속에 숨겨진 추악한 진실을 쫓는 수사극.", crossover: "F" },
+                    { title: "살인자의 기억법", desc: "알츠하이머에 걸린 연쇄살인범의 희미해지는 기억을 다룬 서늘한 내면극.", crossover: "D" },
+                    { title: "악의", desc: "살인자가 아닌, 살인을 저지른 '동기(Motive)'를 집요하게 추적하는 명작.", crossover: "D" },
+                    { title: "가면산장 살인사건", desc: "외딴 산장에 고립된 인물들과 마지막 반전이 기막히게 연결되는 소설.", crossover: "C" },
+                    { title: "미저리", desc: "광기 어린 팬의 집착 속에서 살아남으려는 작가의 숨 막히는 심리 스릴러.", crossover: "B" },
+                    { title: "본 아이덴티티", desc: "기억 상실증에 걸린 요원이 전 세계를 무대로 벌이는 첩보 액션.", crossover: "E" },
+                    { title: "검은 집", desc: "사이코패스와 마주한 보험 사정인의 목숨을 건 추격과 생존 미스터리.", crossover: "E" },
+                    { title: "양들의 침묵", desc: "식인 살인마 한니발 렉터 박사와 FBI 요원의 소름 돋는 심리 게임.", crossover: "D" },
+                    // 최신 베스트셀러 10권 (2016~2026)
+                    { title: "봉제인형 살인사건", desc: "기괴하게 기워진 시체와 다음 살인을 예고하는 살인마와의 숨 가쁜 두뇌전.", crossover: "C" },
+                    { title: "파과", desc: "쇠퇴해가는 늙은 여성 킬러의 삶과 눈부신 서정적 액션을 담은 소설.", crossover: "D" },
+                    { title: "돌이킬 수 없는 약속", desc: "과거에 했던 위험한 약속이 편지가 되어 돌아와 목을 조르는 복수극.", crossover: "B" },
+                    { title: "종의 기원", desc: "순수한 악의 뇌를 가진 청년이 살인을 깨달아가는 압도적 사이코패스 스릴러.", crossover: "D" },
+                    { title: "홍학의 자리", desc: "평화로운 호숫가에 시체를 유기한 교사와 그 뒤의 충격적인 반전 미스터리.", crossover: "B" },
+                    { title: "가재가 노래하는 곳", desc: "외딴 습지 소녀의 성장 드라마 속에 숨겨진 살인사건의 미스터리 진실.", crossover: "B" },
+                    { title: "테라피", desc: "사라진 딸을 찾는 정신과 의사의 왜곡된 기억과 서늘한 반전 스릴러.", crossover: "C" },
+                    { title: "초대받지 못한 손님", desc: "폭설로 고립된 산장에서 한 명씩 죽어 나가는 인물들의 팽팽한 심리 싸움.", crossover: "C" },
+                    { title: "칵테일, 러브, 좀비", desc: "안전한 일상 속에 스며든 괴이한 좀비와 미스터리를 다룬 젊은 단편선.", crossover: "G" },
+                    { title: "크라임씬의 지배자", desc: "가상현실 범죄 시뮬레이션 속에서 완벽한 살인을 설계하는 추리 소설.", crossover: "C" }
+                ]
+            },
+            "B": {
+                name: "감성 가득 낭만 로맨티스트",
+                desc: "당신은 인물들의 섬세한 감정선에 깊이 공감하며, 설렘과 깊은 여운을 남기는 사랑 이야기를 사랑합니다.",
+                books: [
+                    // 스테디셀러 15권
+                    { title: "연금술사", desc: "자신의 꿈과 영혼의 인연을 찾아 머나먼 사막으로 떠나는 소년의 명작.", crossover: "C" },
+                    { title: "상실의 시대", desc: "방황하는 청춘들의 쓸쓸한 고독과 아련한 사랑을 그린 하루키의 최고작.", crossover: "D" },
+                    { title: "작은 아씨들", desc: "각기 다른 매력을 가진 네 자매의 다정한 성장과 따뜻한 사랑 이야기.", crossover: "F" },
+                    { title: "오베라는 남자", desc: "까칠한 노인이 이웃들의 다정한 참견 속에서 다시 사랑을 배우는 감동극.", crossover: "D" },
+                    { title: "모순", desc: "삶과 사랑 속에 숨겨진 지독한 모순들을 섬세하게 헤집어보는 스테디셀러.", crossover: "D" },
+                    { title: "어린 왕자", desc: "소중한 관계와 사랑의 본질을 일깨워주는 인류 영원의 마음 동화.", crossover: "C" },
+                    { title: "나의 라임오렌지나무", desc: "상처받은 소년 제제와 그를 감싸 안아준 아저씨의 눈물겨운 우정과 사랑.", crossover: "D" },
+                    { title: "허삼관 매혈기", desc: "피를 팔아 가족을 살려내는 한 남자의 눈물겹고도 유쾌한 가족 로맨스.", crossover: "F" },
+                    { title: "냉정과 열정사이", desc: "피렌체에서 헤어진 연인의 10년간의 간절한 그리움과 재회를 그린 소설.", crossover: "D" },
+                    { title: "오만과 편견", desc: "남녀 간의 첫인상에 얽힌 오해를 깨뜨리며 완성되는 클래식 로맨스.", crossover: "F" },
+                    { title: "미움받을 용기", desc: "타인의 시선에서 벗어나 내 삶을 온전히 사랑하는 법을 알려주는 대화.", crossover: "D" },
+                    { title: "위대한 개츠비", desc: "한 여자를 향한 영원한 사랑과 집착이 부른 화려하고도 쓸쓸한 환상.", crossover: "F" },
+                    { title: "제인 에어", desc: "가혹한 운명 앞에서도 자신의 존엄과 사랑을 당당히 지켜낸 여성의 고전.", crossover: "F" },
+                    { title: "폭풍의 언덕", desc: "황량한 들판에서 펼쳐지는 파괴적이고도 지독하리만큼 강렬한 사랑의 복수극.", crossover: "F" },
+                    { title: "소나기", desc: "시골 소년과 서울 소녀의 짧지만 평생 잊지 못할 순수하고 소박한 첫사랑.", crossover: "D" },
+                    // 최신 베스트셀러 10권 (2016~2026)
+                    { title: "불편한 편의점", desc: "지친 골목길 편의점에서 정 많은 사람들이 나누는 다정한 치유 로맨스.", crossover: "D" },
+                    { title: "어서 오세요, 휴남동 서점입니다", desc: "서점이라는 공간에서 상처받은 이들이 서로 연대하며 채워가는 사랑의 온기.", crossover: "D" },
+                    { title: "메리골드 마음 세탁소", desc: "마음속 찌든 상처와 아픈 기억의 때를 깨끗하게 지워주는 판타지 힐링 소설.", crossover: "C" },
+                    { title: "아몬드", desc: "감정을 못 느끼는 소년이 주변의 다정한 구원 덕에 사랑을 눈떠가는 감동작.", crossover: "G" },
+                    { title: "바다가 보이는 이발소", desc: "소원해진 가족과 연인들이 잃어버린 마음을 찾아가는 가슴 뭉클한 이야기.", crossover: "D" },
+                    { title: "시선으로부터,", desc: "심시선 할머니로부터 시작된 여성들의 단단하고 다정한 연대의 역사 드라마.", crossover: "F" },
+                    { title: "언어의 온도", desc: "말과 글이 가진 고유의 온도로 꽁꽁 얼어붙은 관계를 녹여주는 감성 산문.", crossover: "D" },
+                    { title: "구미호 식당", desc: "사후 세계의 경계에서 펼쳐지는 삶과 소중한 사람을 향한 눈물겨운 여정.", crossover: "C" },
+                    { title: "그해 우리는", desc: "고등학교 시절 청춘들의 싱그럽고 서툰 사랑과 이별, 성장을 담은 로맨스.", crossover: "G" },
+                    { title: "로맨스는 별책부록", desc: "출판사를 배경으로 책을 만드는 이들의 은은하고 성숙한 사랑 이야기.", crossover: "E" }
+                ]
+            },
+            "C": {
+                name: "무한 상상의 세계 모험가",
+                desc: "당신은 경이롭고 웅장한 세계관 속에서 현실을 완전히 잊고 몰입할 수 있는 판타지와 SF를 선호합니다.",
+                books: [
+                    // 스테디셀러 15권
+                    { title: "해리 포터와 마법사의 돌", desc: "전 세계에 마법 증후군을 일으킨 전설적인 소년 마법사의 웅장한 모험.", crossover: "G" },
+                    { title: "반지의 제왕", desc: "절대반지를 파괴하기 위해 목숨을 건 원정대가 펼치는 정통 판타지의 교과서.", crossover: "F" },
+                    { title: "멋진 신세계", desc: "인간이 완벽히 기계로 통제되고 사육되는 미래를 섬뜩하게 예견한 SF.", crossover: "E" },
+                    { title: "1984", desc: "빅브라더라는 거대 감시 체계 아래 말살되는 인간의 존엄성을 그린 디스토피아.", crossover: "F" },
+                    { title: "은하수를 여행하는 히치하이커를 위한 안내서", desc: "지구 폭발 직전 우주로 튕겨 나간 지구인의 황당무계하고 유쾌한 SF.", crossover: "G" },
+                    { title: "모모", desc: "시간 도둑들에게 빼앗긴 사람들의 따뜻한 시간들을 되찾아주는 신비한 소녀.", crossover: "D" },
+                    { title: "눈물을 마시는 새", desc: "독창적인 동양풍 설정과 네 종족의 대서사를 그린 이영도 작가의 판타지 거작.", crossover: "F" },
+                    { title: "안드로이드는 전기양의 꿈을 꾸는가?", desc: "인간과 복제인간의 경계에서 '인간성'의 본질을 캐묻는 사이버펑크의 시초.", crossover: "D" },
+                    { title: "파운데이션", desc: "은하 제국의 흥망성쇠를 거대한 수학적 통계학으로 예측해 나가는 SF 대작.", crossover: "E" },
+                    { title: "시간 여행자의 아내", desc: "제어할 수 없는 시간 유랑증에 걸린 남자와 그를 향한 애틋한 사랑 서사.", crossover: "B" },
+                    { title: "신 (Le Papillon Des Etoiles)", desc: "인류의 마지막 후손들이 우주선을 타고 1000년간 날아가는 베르베르식 상상력.", crossover: "F" },
+                    { title: "나니아 연대기", desc: "옷장 문 뒤에 숨겨진 신비로운 마법 나라에서 펼쳐지는 아이들의 연대기.", crossover: "G" },
+                    { title: "얼음과 불의 노래", desc: "철왕좌를 차지하기 위한 왕조들의 잔혹하고 치열한 정통 권력 판타지.", crossover: "F" },
+                    { title: "은하철도의 밤", desc: "은하수로 달리는 기차를 타고 삶과 진정한 행복의 의미를 찾는 환상 문학.", crossover: "D" },
+                    { title: "드래곤 라자", desc: "90년대 한국 판타지의 문을 활짝 연, 위트 있고 철학적인 모험담.", crossover: "D" },
+                    // 최신 베스트셀러 10권 (2016~2026)
+                    { title: "달러구트 꿈 백화점", desc: "잠들어야만 입장할 수 있는 상상력 가득한 신비한 꿈 제작 상점의 하루.", crossover: "D" },
+                    { title: "우리가 빛의 속도로 갈 수 없다면", desc: "우주와 과학의 발전 속에서도 소외되는 인간의 감정을 다정하게 안아주는 SF.", crossover: "D" },
+                    { title: "천 개의 파랑", desc: "폐기 직전의 로봇과 경주마가 인간과 만나 전하는 가슴 벅찬 감성 SF.", crossover: "B" },
+                    { title: "지구 끝의 온실", desc: "멸망한 지구를 구한 푸른 식물과 온실 속 여인들의 기억을 찾아 떠나는 서사.", crossover: "F" },
+                    { title: "프로젝트 헤일메리", desc: "태양계의 파멸을 막기 위해 외계인 친구와 손잡은 과학자의 유쾌한 우주 사투.", crossover: "A" },
+                    { title: "미드나잇 라이브러리", desc: "인생의 후회들이 가득한 도서관에서 내가 살지 못한 다른 삶을 체험하는 판타지.", crossover: "B" },
+                    { title: "삼체", desc: "외계 문명의 기이한 지구 침략 앞에 펼쳐지는 물리학적 상상력의 극치 SF.", crossover: "A" },
+                    { title: "종이 동물원", desc: "마술적 리얼리즘과 우주 과학이 동양적 서정성과 완벽하게 결합한 단편작.", crossover: "D" },
+                    { title: "칠드런 오브 타임", desc: "인류 멸망 후 미지의 행성에서 진화한 새로운 문명과의 거대한 도킹 SF.", crossover: "F" },
+                    { title: "전지적 독자 시점", desc: "내가 읽던 소설의 멸망 세계관이 현실이 되어버린 거대한 현대 판타지 명작.", crossover: "G" }
+                ]
+            },
+            "D": {
+                name: "마음 다스리는 사색 에세이스트",
+                desc: "당신은 화려한 픽션보다 작가의 솔직한 인생 고백과 따뜻한 문장을 통해 깊은 위로와 성찰을 얻습니다.",
+                books: [
+                    // 스테디셀러 15권
+                    { title: "꽃으로도 때리지 말라", desc: "전 세계 고통받는 아이들의 현장을 발로 뛰며 전하는 인류애 가득한 기록.", crossover: "F" },
+                    { title: "자전거 도둑", desc: "소박한 소시민들의 삶의 아픔과 성찰을 박완서 작가의 문체로 보듬는 선집.", crossover: "F" },
+                    { title: "서른 잔치는 끝났다", desc: "인생의 가장 뜨거웠던 한 시절을 보내며 느끼는 쓸쓸함과 다정한 고찰.", crossover: "B" },
+                    { title: "보통의 언어들", desc: "일상의 평범한 단어 속 숨은 온도를 짚어 자아를 되찾아주는 위로의 책.", crossover: "B" },
+                    { title: "당신이 옳다", desc: "존재 자체에 대한 깊은 긍정과 치열한 공감으로 상처를 치유하는 심리학.", crossover: "B" },
+                    { title: "살아온 기적 살아갈 기적", desc: "장영희 교수가 투병 속에서 길어 올린 삶에 대한 눈부신 희망과 다정한 찬가.", crossover: "B" },
+                    { title: "인연", desc: "피천득 수필가가 평생 마주한 소박하고도 아름다운 만남과 이별의 아날로그 에세이.", crossover: "B" },
+                    { title: "무소유", desc: "법정 스님이 전하는, 버림으로써 비로소 채워지는 맑고 향기로운 영혼의 지혜.", crossover: "F" },
+                    { title: "감옥으로부터의 사색", desc: "차가운 수감 생활 속에서 인간과 사회에 대해 띄운 묵직하고도 다정한 엽서.", crossover: "F" },
+                    { title: "호밀밭의 파수꾼", desc: "위선 가득한 어른들의 세상에 상처받은 청춘의 솔직하고 거친 내면 방황기.", crossover: "B" },
+                    { title: "월든 (Walden)", desc: "숲속에 오두막을 짓고 자연과 동화되어 문명사회를 돌아보는 자연주의 에세이.", crossover: "F" },
+                    { title: "시를 잊은 그대에게", desc: "메마른 공대생의 시선으로 명시들을 읽어내며 삶의 낭만을 깨우는 감성 교양.", crossover: "C" },
+                    { title: "참을 수 없는 존재의 가벼움", desc: "역사의 소용돌이 속에서 인간의 삶이 가지는 무게감을 철학적으로 짚은 소설.", crossover: "F" },
+                    { title: "침묵의 봄", desc: "무분별한 환경 파괴가 가져올 인류의 비극을 다정하지만 엄중하게 고발한 수필.", crossover: "E" },
+                    { title: "자기만의 방", desc: "여성이 글을 쓰기 위해 필요한 독립된 경제력과 주체성에 대한 버지니아 울프의 강연.", crossover: "F" },
+                    // 최신 베스트셀러 10권 (2016~2026)
+                    { title: "죽고 싶지만 떡볶이는 먹고 싶어", desc: "가벼운 우울증을 앓는 저자가 정신과 의사와 나눈 지독히 솔직한 내면 치유 기록.", crossover: "B" },
+                    { title: "기분이 태도가 되지 않게", desc: "내 감정의 주인이 되어 일과 인간관계를 부드럽고 영리하게 다스리는 감정 관리.", crossover: "E" },
+                    { title: "보노보노처럼 살다니 다행이야", desc: "서툴고 조금 느려도 괜찮아, 만화 속 캐릭터들이 던지는 담담하고 깊은 위로.", crossover: "G" },
+                    { title: "하마터면 열심히 살 뻔했다", desc: "남들의 속도에 맞추지 않고 온전히 나만의 행복을 찾기 위한 유쾌한 야매 인생관.", crossover: "G" },
+                    { title: "나는 나로 살기로 했다", desc: "냉담한 현실 속에서 어른이 되어가는 나를 지키는 온전한 자존감 처방전.", crossover: "B" },
+                    { title: "무례한 사람에게 웃으며 대처하는 법", desc: "일상 속 불편한 이들에게 단호하면서도 센스 있게 내 영역을 지키는 소통법.", crossover: "E" },
+                    { title: "배움의 발견", desc: "공교육을 받지 못했던 소녀가 배움을 통해 가족의 억압에서 벗어나 자아를 찾는 에세이.", crossover: "F" },
+                    { title: "마음의 법칙", desc: "인간관계와 내 내면의 꼬인 실타래를 풀어주는 실천적인 다정한 사색 가이드.", crossover: "B" },
+                    { title: "내면소통", desc: "명상과 과학적 접근을 통해 상처 입은 뇌와 마음을 정화하는 현대의 마음 치유 에세이.", crossover: "C" },
+                    { title: "나를 다정하게 대하는 법", desc: "스스로를 끊임없이 자책하는 현대인들에게 던지는 따뜻하고 고요한 반성문.", crossover: "B" }
+                ]
+            },
+            "E": {
+                name: "트렌드 선점 스마트 경영인",
+                desc: "당신은 책을 맹목적인 재미보다 세상의 자본 흐름을 읽고 나를 성장시키는 실용적인 무기로 활용합니다.",
+                books: [
+                    // 스테디셀러 15권
+                    { title: "지적 대화를 위한 넓고 얕은 지식", desc: "역사와 사회, 경제 구조를 단숨에 꿰뚫어 교양의 기초 체력을 길러주는 책.", crossover: "F" },
+                    { title: "자본주의", desc: "돈의 탄생과 금융 시스템의 보이지 않는 비밀을 파헤친 자본주의 교과서.", crossover: "F" },
+                    { title: "군주론", desc: "냉혹한 비즈니스 전쟁터와 조직 관리에서 살아남기 위한 리더의 현실적 지침서.", crossover: "F" },
+                    { title: "설득의 심리학", desc: "사람의 마음을 움직이고 단숨에 승낙을 이끌어내는 과학적인 6가지 법칙.", crossover: "D" },
+                    { title: "부의 미래", desc: "앨빈 토플러가 예견하는 지식 기반 사회의 거대한 시간과 부의 지각변동.", crossover: "C" },
+                    { title: "화폐전쟁", desc: "세계 금융 권력을 쥔 거대 자본가들이 역사의 물줄기를 어떻게 바꿨는지 파헤치는 책.", crossover: "F" },
+                    { title: "생각에 관한 생각", desc: "인간의 직관 시스템이 저지르는 인지적 오류를 파헤친 행동경제학 거장의 통찰.", crossover: "D" },
+                    { title: "넛지 (Nudge)", desc: "강요하지 않고도 사람들의 행동을 더 좋은 방향으로 유도하는 영리한 설계 원리.", crossover: "D" },
+                    { title: "보랏빛 소가 온다", desc: "평범함은 죄악이다! 시장에서 단숨에 시선을 사로잡는 보랏빛 마케팅 혁명.", crossover: "D" },
+                    { title: "백종원의 장사 이야기", desc: "외식업의 대부가 전하는, 철저한 현장 경험에서 우러나온 현실 창업 바이블.", crossover: "D" },
+                    { title: "부자 마인드셋", desc: "가난한 사람과 부자의 생각 차이를 극명하게 분석해 내 부의 회로를 켜는 책.", crossover: "D" },
+                    { title: "경영학 마스터클래스", desc: "피터 드러커를 비롯한 세계 최고 경영 석학들의 에센스 전략을 모은 교양서.", crossover: "F" },
+                    { title: "생각의 비밀", desc: "김승호 회장이 전하는, 목표를 100번 쓰며 잠재의식을 깨우는 부의 실행 법칙.", crossover: "D" },
+                    { title: "린 스타트업", desc: "빠르게 실행하고 피드백을 받아 낭비 없이 비즈니스를 키우는 현대 창업의 정석.", crossover: "C" },
+                    { title: "포지셔닝", desc: "소비자의 복잡한 머릿속 틈새에 내 브랜드를 1등으로 각인시키는 마케팅 고전.", crossover: "D" },
+                    // 최신 베스트셀러 10권 (2016~2026)
+                    { title: "세이노의 가르침", desc: "피와 살이 되는 거친 독설로 인생의 무기력과 재테크 자세를 바로잡는 바이블.", crossover: "D" },
+                    { title: "돈의 속성", desc: "돈을 인격체로 대하라! 부자가 되기 위해 반드시 지켜야 할 금융 자산가의 태도.", crossover: "D" },
+                    { title: "원씽 (The One Thing)", desc: "수많은 업무 유혹을 물리치고, 내 성과를 폭발시킬 단 하나의 핵심에 몰두하라.", crossover: "D" },
+                    { title: "트렌드 코리아 시리즈", desc: "급변하는 대한민국 소비 시장의 흐름과 MZ 트렌드를 한눈에 포착하는 필독서.", crossover: "F" },
+                    { title: "부의 시나리오", desc: "금리, 환율, 인플레이션 등 거시 경제 흐름을 아주 쉽게 설명해주는 친절한 가이드.", crossover: "F" },
+                    { title: "아주 작은 습관의 힘", desc: "매일 1%의 작은 시스템 개선이 거대한 인생 역전을 만들어내는 원자 습관 법칙.", crossover: "D" },
+                    { title: "초집중", desc: "스마트폰 알림과 디지털 중독 속에서 내 온전한 집중력을 사수하는 실천법.", crossover: "C" },
+                    { title: "팩트풀니스", desc: "우리가 세상을 부정적으로 왜곡해 오해하는 10가지 인지 본능과 통계적 진실.", crossover: "D" },
+                    { title: "미생 오피스 트렌드", desc: "K-직장인들의 냉혹한 비즈니스 생존 법칙을 조직 행동론으로 분석한 책.", crossover: "G" },
+                    { title: "인공지능 경제학", desc: "AI 시대에 나의 대체 불가능한 자산을 어떻게 구축하고 선점할 것인가의 해답.", crossover: "C" }
+                ]
+            },
+            "F": {
+                name: "지적 통찰 인문 사학자",
+                desc: "당신은 현재의 혼란스러운 세상의 답을 과거 역사적 사건과 철학자들의 거대한 지혜 속에서 찾으려 합니다.",
+                books: [
+                    // 스테디셀러 15권
+                    { title: "사피엔스", desc: "변방의 유인원이 어떻게 행성의 절대지배자가 되었는가? 거대한 인류사 대서사시.", crossover: "C" },
+                    { title: "총, 균, 쇠", desc: "인류 문명의 불평등은 인종이 아닌 지리적, 환경적 요인 때문임을 규명한 기념비작.", crossover: "E" },
+                    { title: "코스모스", desc: "광활한 우주의 신비와 인류의 역사적 탐구를 시적이고 문학적인 언어로 담아낸 최고봉.", crossover: "C" },
+                    { title: "정의란 무엇인가", desc: "도덕적 구체적 딜레마를 통해 사회 정의와 올바른 선택이 무엇인지 묻는 철학 토론.", crossover: "E" },
+                    { title: "역사의 인간들", desc: "세계를 바꾼 리더들의 위대한 결정적 순간과 그들이 남긴 교훈적 메시지.", crossover: "D" },
+                    { title: "소크라테스의 변명", desc: "진리와 정의를 지키기 위해 죽음 앞에서도 당당했던 철학자의 치열한 변론 기록.", crossover: "D" },
+                    { title: "역사란 무엇인가", desc: "과거와 현재의 끊임없는 대화, 역사를 바라보는 올바른 진보적 시각을 정립하는 고전.", crossover: "D" },
+                    { title: "국가론", desc: "플라톤이 꿈꾸었던 이상적인 국가와 정의로운 철인 통치에 대한 위대한 철학서.", crossover: "E" },
+                    { title: "백범일지", desc: "대한민국의 독립을 위해 평생을 바친 김구 선생의 숭고하고 뜨거운 민족적 기록.", crossover: "D" },
+                    { title: "징비록", desc: "임진왜란의 참혹한 실책을 반성하고 미래를 경계하기 위해 류성룡이 피로 쓴 역사 기록.", crossover: "A" },
+                    { title: "목민심서", desc: "공직자가 지녀야 할 청렴한 자세와 백성을 다스리는 도리를 다룬 정약용의 명작.", crossover: "E" },
+                    { title: "로마인 이야기", desc: "작은 도시국가 로마가 어떻게 천년 세계 제국으로 성장했는가에 대한 방대한 인프라史.", crossover: "E" },
+                    { title: "그리스 로마 신화", desc: "서양 문화와 문학의 뿌리가 되는 신들과 인간들의 흥미진진한 상상력 원천.", crossover: "C" },
+                    { title: "삼국유사", desc: "우리 민족의 건국 신화와 민간 설화, 역사적 발자취를 담은 보물 같은 고대 기록.", crossover: "C" },
+                    { title: "감시와 처벌", desc: "현대 사회의 병원, 학교, 군대가 어떻게 거대한 감옥처럼 인간을 길들이는지 분석한 철학.", crossover: "A" },
+                    // 최신 베스트셀러 10권 (2016~2026)
+                    { title: "역사의 쓸모", desc: "역사 속 인물들의 삶의 궤적을 통해 오늘 내 삶의 답답한 질문에 답을 구하는 책.", crossover: "D" },
+                    { title: "박시백의 조선왕조실록", desc: "방대한 실록 데이터를 명쾌한 역사 만화 고증으로 구현한 인문학의 대혁명.", crossover: "G" },
+                    { title: "인간을 탐구하는 미술관", desc: "명화 속에 숨겨진 시대적 역사 배경과 인간 심리의 코드를 읽어내는 예술 인문학.", crossover: "D" },
+                    { title: "최소한의 인문학", desc: "역사, 철학, 문학의 에센스만을 모아 현대인에게 필요한 지적 대화의 교양을 채워주는 책.", crossover: "E" },
+                    { title: "조선왕조오백년 야사톡", desc: "조선 시대 왕과 백성들의 비하인드 스토리를 메신저 대화식으로 유쾌하게 풀어낸 인문학.", crossover: "G" },
+                    { title: "지리 기술 전쟁", desc: "세계 패권국들이 영토와 지리적 거점을 차지하기 위해 벌이는 최신 국제 정치학 교양.", crossover: "E" },
+                    { title: "처음 읽는 그리스 철학", desc: "골치 아픈 고대 철학자들의 핵심 사상을 현대적 언어로 명쾌하게 풀어낸 지혜 서적.", crossover: "D" },
+                    { title: "문명과 질병의 역사", desc: "페스트부터 현대 바이러스까지, 전염병이 인류 역사 구조를 어떻게 리셋했는지 추적한 책.", crossover: "A" },
+                    { title: "세계사를 바꾼 10가지 음모", desc: "역사 교과서 이면에 숨겨진 미스터리한 정치적 음모와 정보전의 실체를 파헤친 수작.", crossover: "A" },
+                    { title: "사유의 시선", desc: "인간 존재와 우주의 본질을 철학적 사유의 눈으로 깊이 있게 바라보는 인문 명작 에세이.", crossover: "D" }
+                ]
+            },
+            "G": {
+                name: "상상력 대폭발 만화 모험가",
+                desc: "당신은 글자만 가득한 책보다 시각적 연출과 역동적인 캐릭터, 재치 있는 대사에서 최고의 몰입을 느낍니다.",
+                books: [
+                    // 스테디셀러 15권
+                    { title: "슬램덩크 전권", desc: "왼손은 거들 뿐! 청춘들의 뜨거운 열정과 농구를 향한 불멸의 만화 클래식.", crossover: "B" },
+                    { title: "드래곤볼", desc: "전 세계를 상상력의 스케일로 압도한 모험 판타지 만화의 전설이자 뿌리.", crossover: "C" },
+                    { title: "원피스", desc: "동료들과 함께 대비보를 찾아 바다로 떠나는 거대한 해적 판타지 대서사시.", crossover: "C" },
+                    { title: "명탐정 코난", desc: "몸은 작아졌어도 두뇌는 그대로! 치밀한 트릭을 풀어내는 추리 만화의 황제.", crossover: "A" },
+                    { title: "몬스터", desc: "살려낸 천재 사이코패스를 추적하며 인간의 선과 악의 경계를 묻는 스릴러 만화의 신화.", crossover: "A" },
+                    { title: "식객", desc: "전국 팔도의 귀한 음식과 그 속에 담긴 사람들의 눈물겨운 감동 인생 에세이 만화.", crossover: "D" },
+                    { title: "강철의 연금술사", desc: "등가교환의 법칙 아래 잃어버린 몸을 찾으려는 형제의 철학적 정통 판타지 만화.", crossover: "C" },
+                    { title: "데스노트", desc: "이름을 적으면 죽는 노트를 둘러싼 두 천재의 숨 막히는 서스펜스 두뇌 싸움 만화.", crossover: "A" },
+                    { title: "바람의 검심", desc: "메이지 유신 시대를 배경으로 칼잡이 발도재가 펼치는 참회와 검술 역사 만화.", crossover: "F" },
+                    { title: "H2 (에이치투)", desc: "고교 야구를 배경으로 펼쳐지는 네 청춘의 풋풋하고도 아련한 엇갈림 로맨스 만화.", crossover: "B" },
+                    { title: "핑퐁", desc: "탁구에 인생을 건 천재와 수재의 고독한 사투를 독창적인 연출로 그려낸 예술 만화.", crossover: "D" },
+                    { title: "신의 물방울", desc: "와인 한 방울 속에 담긴 대자연의 서사와 인생을 찾아가는 지적 교양 만화.", crossover: "E" },
+                    { title: "기생수", desc: "인간의 뇌를 점령한 외계 생명체와 한 소년의 기이한 공존과 생존 SF 만화.", crossover: "C" },
+                    { title: "심야식당", desc: "밤 12시에 문을 여는 이색 식당에서 손님들이 나누는 다정하고 쓸쓸한 인생 공감 만화.", crossover: "D" },
+                    { title: "베르세르크", desc: "거대한 대검을 들고 가혹한 운명과 마수들에 맞서 싸우는 다크 판타지의 정점.", crossover: "C" },
+                    // 최신 베스트셀러 10권 (2016~2026)
+                    { title: "미생 전권", desc: "바둑판 같던 직장 생활 속에서 살아남으려는 인턴들의 리얼한 경영 생존 교과서 웹툰.", crossover: "E" },
+                    { title: "신과함께", desc: "저승 법에 따라 사후 49일 동안 펼쳐지는 7번의 재판을 그린 한국 신화 판타지 웹툰.", crossover: "F" },
+                    { title: "이태원 클라쓰", desc: "불합리한 세상 속, 고집과 객기로 뭉친 청춘들의 이태원 창업 신화 복수극 웹툰.", crossover: "E" },
+                    { title: "유미의 세포들", desc: "머릿속 세포들의 앙증맞은 연출을 통해 삼십대 여성의 현실 연애와 심리를 그린 로맨스 웹툰.", crossover: "B" },
+                    { title: "귀멸의 칼날", desc: "도깨비가 된 여동생을 인간으로 되돌리기 위한 혈풍검극 판타지 만화의 메가 히트작.", crossover: "C" },
+                    { title: "나 혼자만 레벨업", desc: "인류 최약체 헌터가 전 세계를 제패하는 최강의 존재로 거듭나는 먼치킨 카타르시스 웹툰.", crossover: "C" },
+                    { title: "타인의 지옥이다", desc: "낯선 고시원 생활 속에서 이웃들이 선사하는 숨 막히는 사이코패스 스릴러 공포 웹툰.", crossover: "A" },
+                    { title: "삼국지톡", desc: "조조, 유비, 손권이 스마트폰을 쓴다면? 삼국지 역사를 트렌디하게 재해석한 인기 웹툰.", crossover: "F" },
+                    { title: "정년이", desc: "150년대 국극단을 배경으로 소리 천재 소녀들의 뜨거운 우정과 라이벌 성장을 다룬 역사 웹툰.", crossover: "F" },
+                    { title: "송곳", desc: "대형마트의 부당해고에 맞서 법과 노동의 가치를 치열하게 배우는 하이퍼리얼리즘 웹툰.", crossover: "E" }
+                ]
+            }
+        };
+
+        let currentQuestionIndex = 0;
+        let scores = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
+
+        function startTest() {
+            document.getElementById("start-screen").classList.remove("active");
+            document.getElementById("question-screen").classList.add("active");
+            currentQuestionIndex = 0;
+            scores = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0, G: 0 };
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const qData = questions[currentQuestionIndex];
+            
+            document.getElementById("q-number").innerText = `Question ${currentQuestionIndex + 1} / 15`;
+            document.getElementById("q-text").innerText = qData.q;
+            
+            const progressPercent = (currentQuestionIndex / questions.length) * 100;
+            document.getElementById("progress-bar").style.width = `${progressPercent}%`;
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+            
+            qData.options.forEach(option => {
+                const button = document.createElement("button");
+                button.className = "option-btn";
+                button.innerText = option.text;
+                button.onclick = () => selectOption(option.type);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function selectOption(type) {
+            scores[type]++;
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                document.getElementById("progress-bar").style.width = "100%";
+                setTimeout(showResult, 200);
+            }
+        }
+
+        // 피셔-예이츠 완벽 셔플 알고리즘
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        }
+
+        function showResult() {
+            document.getElementById("question-screen").classList.remove("active");
+            document.getElementById("result-screen").classList.add("active");
+
+            // 🌟 [동점 정밀 처리] 정렬 전 카테고리 기호 자체를 먼저 완전히 섞음으로써 동점자 편향 완벽 해결
+            let baseCategories = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+            baseCategories = shuffle(baseCategories);
+            const sortedTypes = baseCategories.sort((a, b) => scores[b] - scores[a]);
+            
+            const top1 = sortedTypes[0];
+            const top2 = sortedTypes[1];
+
+            const nameMap = {
+                "A": "추리/스릴러",
+                "B": "로맨스",
+                "C": "판타지/SF",
+                "D": "에세이/시",
+                "E": "경제/경영",
+                "F": "인문/역사",
+                "G": "만화/웹툰"
+            };
+            
+            let combinedName = `${nameMap[top1]} x ${nameMap[top2]} 융합형 취향`;
+            let combinedDesc = `당신의 메인 취향은 [${categoryDetails[top1].name}]이며, 서브 취향으로 [${categoryDetails[top2].name}] 성향도 함께 가지고 계시네요! \n\n${categoryDetails[top1].desc} 더불어 ${categoryDetails[top2].desc.replace("당신은 ", "")} 두 가지 매력을 모두 관통하는 도서들을 선별해 드립니다.`;
+
+            document.getElementById("result-name").innerText = combinedName;
+            document.getElementById("result-desc").innerText = combinedDesc;
+
+            const bookListContainer = document.getElementById("book-list");
+            bookListContainer.innerHTML = ""; // 🌟 메모리 잔상 제거
+
+            let recommendedBooks = [];
+            
+            // 🌟 [하이브리드 알고리즘] 1위와 2위의 크로스오버(융합형) 도서 추적
+            let fusionPool = [];
+            
+            // 1위 상자 안에서 2위 태그가 달린 책 탐색
+            categoryDetails[top1].books.forEach(b => {
+                if (b.crossover === top2) fusionPool.push({ ...b, tag: `${nameMap[top1]} x ${nameMap[top2]} 융합` });
+            });
+            // 2위 상자 안에서 1위 태그가 달린 책 탐색
+            categoryDetails[top2].books.forEach(b => {
+                if (b.crossover === top1) fusionPool.push({ ...b, tag: `${nameMap[top1]} x ${nameMap[top2]} 융합` });
+            });
+
+            // 융합 도서 풀 셔플
+            fusionPool = shuffle(fusionPool);
+
+            // 1. 융합형 도서 최대 2권 우선 장착 (B안)
+            let fusionSelected = fusionPool.slice(0, 2);
+            fusionSelected.forEach(b => recommendedBooks.push(b));
+
+            // 2. 1위 장르 순수 대중 인기작 1권 강제 매칭 (A안)
+            let pureTop1Pool = shuffle([...categoryDetails[top1].books]);
+            let pureSelectedBook = null;
+
+            for (let i = 0; i < pureTop1Pool.length; i++) {
+                // 이미 뽑힌 융합 책들과 제목이 중복되지 않는 순수 도서 선택
+                if (!recommendedBooks.some(rb => rb.title === pureTop1Pool[i].title)) {
+                    pureSelectedBook = { ...pureTop1Pool[i], tag: `${nameMap[top1]} 순수 인기작` };
+                    break;
+                }
+            }
+            if (pureSelectedBook) recommendedBooks.push(pureSelectedBook);
+
+            // 3. 만약 융합책이 아예 없거나 부족하여 총 3권이 채워지지 않았을 경우용 안전 보완재 (Fallback)
+            if (recommendedBooks.length < 3) {
+                let pureTop2Pool = shuffle([...categoryDetails[top2].books]);
+                for (let i = 0; i < pureTop2Pool.length; i++) {
+                    if (recommendedBooks.length >= 3) break;
+                    if (!recommendedBooks.some(rb => rb.title === pureTop2Pool[i].title)) {
+                        recommendedBooks.push({ ...pureTop2Pool[i], tag: `${nameMap[top2]} 추천` });
+                    }
+                }
+            }
+
+            // 최종 선정된 3권 렌더링
+            recommendedBooks.slice(0, 3).forEach(book => {
+                const card = document.createElement("div");
+                card.className = "book-card";
+                card.innerHTML = `
+                    <div class="book-tag">${book.tag}</div>
+                    <div class="book-title">📖 ${book.title}</div>
+                    <div class="book-desc">${book.desc}</div>
+                `;
+                bookListContainer.appendChild(card);
+            });
+        }
+
+        function restartTest() {
+            document.getElementById("result-screen").classList.remove("active");
+            startTest();
+        }
+    </script>
+</body>
+</html>
