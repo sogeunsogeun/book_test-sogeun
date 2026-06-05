@@ -258,6 +258,7 @@
 
     <div class="container">
         
+        <!-- 1. 시작 화면 -->
         <div id="start-screen" class="screen active">
             <div class="main-img">
                 <img src="logo.png" alt="소근소근 로고" style="width: 260px; height: auto;">
@@ -267,6 +268,7 @@
             <button class="btn" onclick="startTest()">테스트 시작하기</button>
         </div>
 
+        <!-- 2. 질문 화면 -->
         <div id="question-screen" class="screen">
             <div class="progress-container">
                 <div id="progress-bar" class="progress-bar"></div>
@@ -276,6 +278,7 @@
             <div id="options" class="options-list"></div>
         </div>
 
+        <!-- 3. 결과 화면 -->
         <div id="result-screen" class="screen">
             <div class="result-title">당신의 독서 취향은?</div>
             <div id="result-name" class="result-name">유형 이름 조합</div>
@@ -394,7 +397,7 @@
                 q: "갑자기 일주일 동안 스마트폰과 인터넷이 전면 차단된다면?",
                 options: [
                     { text: "오히려 좋아! 그동안 밀린 초자연적·미스터리 장편 소설을 쌓아두고 읽는다", type: "A" },
-                    { text: "나 자신을 되돌아보며 조용히 사색하고 아날로그 감성을 즐긴다", type: "D" },
+                    { text: "나 자신을 되돌아보며 조용히 사색하고 아날로그 감성을 즐친다", type: "D" },
                     { text: "우주나 이세계로 떠나는 판타지 만화책을 전권 대여해 와서 방방 뒹굴며 본다", type: "G" },
                     { text: "미래 사회를 대비하기 위해 최신 종이 신문과 트렌드 서적을 정독한다", type: "E" }
                 ]
@@ -438,20 +441,20 @@
                     { title: "다빈치 코드", desc: "미술관의 암호를 풀며 역사적 종교 음모에 다가가는 지적 스릴러.", crossover: "F" },
                     { title: "용의자 X의 헌신", desc: "천재 수학자가 설계한 완벽한 알리바이를 깨뜨리는 완벽한 두뇌 싸움.", crossover: "B" },
                     { title: "화차", desc: "신용사회의 어두운 이면 속에서 실종된 여인을 추적하는 사회파 미스터리.", crossover: "E" },
-                    { title: "7년의 밤", desc: "액자식 구성 속에서 폭발하는 서사와 지독한 복수극을 그린 한국 스릴러.", crossover: "D" },
+                    { title: "7년의 밤", desc: "액자식 구성 속에서 폭발하는 서사와 지독한 복수극을 그린 한국 스릴러.", crossover: "" }, // ⭕ 억지 융합 해제 (추리 전용)
                     { title: "모방범", desc: "범죄의 잔혹함과 사회적 파장을 극사실적으로 묘사한 미야베 미유키의 대작.", crossover: "F" },
                     { title: "백설공주에게 죽음을", desc: "마을 사람들의 차가운 위선 속에 숨겨진 추악한 진실을 쫓는 수사극.", crossover: "F" },
-                    { title: "살인자의 기억법", desc: "알츠하이머에 걸린 연쇄살인범의 희미해지는 기억을 다룬 서늘한 내면극.", crossover: "D" },
-                    { title: "악의", desc: "살인자가 아닌, 살인을 저지른 '동기(Motive)'를 집요하게 추적하는 명작.", crossover: "D" },
+                    { title: "살인자의 기억법", desc: "알츠하이머에 걸린 연쇄살인범의 희미해지는 기억을 다룬 서늘한 내면극.", crossover: "" },
+                    { title: "악의", desc: "살인자가 아닌, 살인을 저지른 '동기(Motive)'를 집요하게 추적하는 명작.", crossover: "" },
                     { title: "가면산장 살인사건", desc: "외딴 산장에 고립된 인물들과 마지막 반전이 기막히게 연결되는 소설.", crossover: "C" },
                     { title: "미저리", desc: "광기 어린 팬의 집착 속에서 살아남으려는 작가의 숨 막히는 심리 스릴러.", crossover: "B" },
                     { title: "본 아이덴티티", desc: "기억 상실증에 걸린 요원이 전 세계를 무대로 벌이는 첩보 액션.", crossover: "E" },
                     { title: "검은 집", desc: "보험 사정인이 사이코패스 고객과 마주하며 벌어지는 목숨을 건 잔혹 생존 미스터리.", crossover: "E" },
-                    { title: "양들의 침묵", desc: "식인 살인마 한니발 렉터 박사와 FBI 요원의 소름 돋는 심리 게임.", crossover: "D" },
+                    { title: "양들의 침묵", desc: "식인 살인마 한니발 렉터 박사와 FBI 요원의 소름 돋는 심리 게임.", crossover: "" },
                     { title: "봉제인형 살인사건", desc: "기괴하게 기워진 시체와 다음 살인을 예고하는 살인마와의 숨 가쁜 두뇌전.", crossover: "C" },
-                    { title: "파과", desc: "쇠퇴해가는 늙은 여성 킬러의 삶과 눈부신 서정적 액션을 담은 소설.", crossover: "D" },
+                    { title: "파과", desc: "쇠퇴해가는 늙은 여성 킬러의 삶과 눈부신 서정적 액션을 담은 소설.", crossover: "" },
                     { title: "돌이킬 수 없는 약속", desc: "과거에 했던 위험한 약속이 편지가 되어 돌아와 목을 조르는 복수극.", crossover: "B" },
-                    { title: "종의 기원", desc: "순수한 악의 뇌를 가진 청년이 살인을 깨달아가는 압도적 사이코패스 스릴러.", crossover: "D" },
+                    { title: "종의 기원", desc: "순수한 악의 뇌를 가진 청년이 살인을 깨달아가는 압도적 사이코패스 스릴러.", crossover: "" },
                     { title: "홍학의 자리", desc: "평화로운 호숫가에 시체를 유기한 교사와 그 뒤의 충격적인 반전 미스터리.", crossover: "B" },
                     { title: "가재가 노래하는 곳", desc: "외딴 습지 소녀의 성장 드라마 속에 숨겨진 살인사건의 미스터리 진실.", crossover: "B" },
                     { title: "테라피", desc: "사라진 딸을 찾는 정신과 의사의 왜곡된 기억과 충격적인 심리 반전 스릴러.", crossover: "C" },
@@ -468,7 +471,7 @@
                     { title: "상실의 시대", desc: "방황하는 청춘들의 쓸쓸한 고독과 아련한 사랑을 그린 하루키의 최고작.", crossover: "D" },
                     { title: "작은 아씨들", desc: "각기 다른 매력을 가진 네 자매의 다정한 성장과 따뜻한 사랑 이야기.", crossover: "F" },
                     { title: "오베라는 남자", desc: "까칠한 노인이 이웃들의 다정한 참견 속에서 다시 사랑을 배우는 감동극.", crossover: "D" },
-                    { title: "모순", desc: "삶과 사랑 속에 숨겨진 지독한 모순들을 섬세하게 헤집어보는 스테디셀러.", crossover: "D" },
+                    { title: "모순", desc: "삶과 사랑 속에 숨겨진 지독한 모순들을 섬세하게 해집어보는 스테디셀러.", crossover: "D" },
                     { title: "어린 왕자", desc: "소중한 관계와 사랑의 본질을 일깨워주는 인류 영원의 마음 동화.", crossover: "C" },
                     { title: "나의 라임오렌지나무", desc: "상처받은 소년 제제와 그를 감싸 안아준 아저씨의 눈물겨운 교감과 다정한 사랑.", crossover: "D" },
                     { title: "허삼관 매혈기", desc: "가족을 지키기 위해 피를 파는 한 남자의 삶을 해학과 뜨거운 가족애로 버무려낸 중국 문학 걸작.", crossover: "F" },
@@ -506,7 +509,7 @@
                     { title: "파운데이션", desc: "은하 제국의 흥망성쇠를 거대한 수학적 통계학으로 예측해 나가는 SF 대작.", crossover: "E" },
                     { title: "시간 여행자의 아내", desc: "제어할 수 없는 시간 유랑증에 걸린 남자와 그를 향한 애틋한 사랑 서사.", crossover: "B" },
                     { title: "신 (Le Papillon Des Etoiles)", desc: "인류의 마지막 후손들이 우주선을 타고 1000년간 날아가는 베르베르식 상상력.", crossover: "F" },
-                    { title: "나니아 연대기", desc: "옷장 문 뒤에 숨겨진 신비로운 마법 나라에서 펼쳐지는 아이들의 연대기.", crossover: "G" },
+                    { title: "나尼亚 연대기", desc: "옷장 문 뒤에 숨겨진 신비로운 마법 나라에서 펼쳐지는 아이들의 연대기.", crossover: "G" },
                     { title: "얼음과 불의 노래", desc: "철왕좌를 차지하기 위한 왕조들의 잔혹하고 치열한 정통 권력 판타지.", crossover: "F" },
                     { title: "은하철도의 밤", desc: "은하수로 달리는 기차를 타고 삶과 진정한 행복의 의미를 찾는 환상 문학.", crossover: "D" },
                     { title: "드래곤 라자", desc: "90년대 한국 판타지의 문을 활짝 연, 위트 있고 철학적인 모험담.", crossover: "D" },
@@ -533,7 +536,7 @@
                     { title: "당신이 옳다", desc: "존재 자체에 대한 깊은 긍정과 치열한 공감으로 상처를 치유하는 심리학.", crossover: "B" },
                     { title: "살아온 기적 살아갈 기적", desc: "장영희 교수가 투병 속에서 길어 올린 삶에 대한 눈부신 희망과 다정한 찬가.", crossover: "B" },
                     { title: "인연", desc: "피천득 수필가가 평생 마주한 소박하고도 아름다운 만남과 이별의 아날로그 에세이.", crossover: "B" },
-                    { title: "무소유", desc: "법정 스님이 전하는, 버림으로써 비로소 채워지는 맑고 향기로운 영혼의 지혜.", crossover: "F" },
+                    { title: "무소유", desc: "법정 스님이 전하는, 버림으로써 비로소 채회되는 맑고 향기로운 영혼의 지혜.", crossover: "F" },
                     { title: "감옥으로부터의 사색", desc: "차가운 수감 생활 속에서 인간과 사회에 대해 띄운 묵직하고도 다정한 엽서.", crossover: "F" },
                     { title: "당신을 보며 시를 썼다", desc: "메마른 가슴에 다정한 사랑과 자연의 잔잔한 감성을 일깨워주는 따뜻한 시집.", crossover: "B" },
                     { title: "월든 (Walden)", desc: "숲속에 오두막을 짓고 자연과 동화되어 문명사회를 돌아보는 자연주의 에세이.", crossover: "F" },
@@ -550,7 +553,7 @@
                     { title: "배움의 발견", desc: "공교육을 받지 못했던 소녀가 배움을 통해 가족의 억압에서 벗어나 자아를 찾는 에세이.", crossover: "F" },
                     { title: "마음의 법칙", desc: "인간관계와 내 내면의 꼬인 실타래를 풀어주는 실천적인 다정한 사색 가이드.", crossover: "B" },
                     { title: "내면소통", desc: "명상과 과학적 접근을 통해 상처 입은 뇌와 마음을 정화하는 현대의 마음 치유 에세이.", crossover: "C" },
-                    { title: "나를 다정하게 대하는 법", desc: "스스로를 끊임없이 자책하는 현대인들에게 던지는 따뜻하고 고요한 반성문.", crossover: "B" }
+                    { title: "혼자 있는 시간의 힘", desc: "고독을 성장의 발판으로 삼아 나를 단단하게 리브랜딩하는 최고의 사색 힐링 에세이.", crossover: "B" }
                 ]
             },
             "E": {
@@ -600,7 +603,7 @@
                     { title: "징비록", desc: "임진왜란의 참혹한 실책을 반성하고 미래를 경계하기 위해 류성룡이 피로 쓴 역사 기록.", crossover: "A" },
                     { title: "목민심서", desc: "공직자가 지녀야 할 청렴한 자세와 백성을 다스리는 도리를 다룬 정약용의 명작.", crossover: "E" },
                     { title: "로마인 이야기", desc: "작은 도시국가 로마가 어떻게 천년 세계 제국으로 성장했는가에 대한 방대한 인프라史.", crossover: "E" },
-                    { title: "그ريس 로마 신화", desc: "서양 문화와 문학의 뿌리가 되는 신들과 인간들의 흥미진진한 상상력 원천.", crossover: "C" },
+                    { title: "그리스 로마 신화", desc: "서양 문화와 문학의 뿌리가 되는 신들과 인간들의 흥미진진한 상상력 원천.", crossover: "C" },
                     { title: "삼국유사", desc: "우리 민족의 건국 신화와 민간 설화, 역사적 발자취를 담은 보물 같은 고대 기록.", crossover: "C" },
                     { title: "감시와 처벌", desc: "현대 사회의 병원, 학교, 군대가 어떻게 거대한 감옥처럼 인간을 길들이는지 분석한 철학.", crossover: "A" },
                     { title: "역사의 쓸모", desc: "역사 속 인물들의 삶의 궤적을 통해 오늘 내 삶의 답답한 질문에 답을 구하는 책.", crossover: "D" },
@@ -723,13 +726,10 @@
                 "G": "만화/웹툰"
             };
             
-            // 🌟 [수정 반영] 메인 및 서브 취향 텍스트 <strong> 태그 추가로 진하게 강조 처리
             let combinedName = `${nameMap[top1]} x ${nameMap[top2]} 융합형 취향`;
             let combinedDesc = `당신의 메인 취향은 <strong>[${categoryDetails[top1].name}]</strong>이며, 서브 취향으로 <strong>[${categoryDetails[top2].name}]</strong> 성향도 함께 가지고 계시네요! \n\n${categoryDetails[top1].desc} 더불어 ${categoryDetails[top2].desc.replace("당신은 ", "")} 두 가지 매력을 모두 관통하는 도서들을 선별해 드립니다.`;
 
             document.getElementById("result-name").innerText = combinedName;
-            
-            // 🌟 [수정 반영] <strong> 태그를 웹 문서로 안전하게 읽기 위해 innerText를 innerHTML로 전면 개정
             document.getElementById("result-desc").innerHTML = combinedDesc;
 
             const bookListContainer = document.getElementById("book-list");
@@ -739,34 +739,38 @@
             let fusionPool = [];
             
             categoryDetails[top1].books.forEach(b => {
-                if (b.crossover === top2) fusionPool.push({ ...b, tag: `${nameMap[top1]} x ${nameMap[top2]} 융합` });
+                if (b.crossover === top2 && b.crossover !== "") {
+                    fusionPool.push({ ...b, tag: `${nameMap[top1]} x ${nameMap[top2]} 융합` });
+                }
             });
             categoryDetails[top2].books.forEach(b => {
-                if (b.crossover === top1) fusionPool.push({ ...b, tag: `${nameMap[top1]} x ${nameMap[top2]} 융합` });
+                if (b.crossover === top1 && b.crossover !== "") {
+                    fusionPool.push({ ...b, tag: `${nameMap[top1]} x ${nameMap[top2]} 융합` });
+                }
             });
 
             fusionPool = shuffle(fusionPool);
 
+            // 1. 진짜 겹치는 융합 도서가 있을 때만 장착 (최대 2권)
             let fusionSelected = fusionPool.slice(0, 2);
             fusionSelected.forEach(b => recommendedBooks.push(b));
 
+            // 2. 1위 장르 순수 최고 인기작 채워 넣기
             let pureTop1Pool = shuffle([...categoryDetails[top1].books]);
-            let pureSelectedBook = null;
-
             for (let i = 0; i < pureTop1Pool.length; i++) {
+                if (recommendedBooks.length >= 3) break; // 3권 다 차면 중단
                 if (!recommendedBooks.some(rb => rb.title === pureTop1Pool[i].title)) {
-                    pureSelectedBook = { ...pureTop1Pool[i], tag: `${nameMap[top1]} 순수 인기작` };
-                    break;
+                    recommendedBooks.push({ ...pureTop1Pool[i], tag: `${nameMap[top1]} 인기작` });
                 }
             }
-            if (pureSelectedBook) recommendedBooks.push(pureSelectedBook);
 
+            // 3. 만약 3권이 다 안 찼다면 2위 장르 순수 인기작에서 백업 수혈
             if (recommendedBooks.length < 3) {
                 let pureTop2Pool = shuffle([...categoryDetails[top2].books]);
                 for (let i = 0; i < pureTop2Pool.length; i++) {
                     if (recommendedBooks.length >= 3) break;
                     if (!recommendedBooks.some(rb => rb.title === pureTop2Pool[i].title)) {
-                        recommendedBooks.push({ ...pureTop2Pool[i], tag: `${nameMap[top2]} 추천` });
+                        recommendedBooks.push({ ...pureTop2Pool[i], tag: `${nameMap[top2]} 인기작` });
                     }
                 }
             }
